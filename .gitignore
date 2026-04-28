@@ -1,0 +1,109 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+out/
+target/
+coverage/
+
+# Cache
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.turbo/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+env/
+ENV/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Java / JVM
+*.class
+*.jar
+*.war
+*.ear
+.gradle/
+.mvn/
+target/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# PHP / Composer
+composer.phar
+/vendor/
+
+# Ruby
+.bundle/
+log/
+tmp/
+
+# Go
+*.exe
+*.test
+*.out
+
+# Rust
+target/
+Cargo.lock
+
+# Docker
+.docker/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.old
+
+# Secrets / keys
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
