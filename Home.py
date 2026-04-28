@@ -1,28 +1,20 @@
 import streamlit as st
+import os
+from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
 
-st.set_page_config(
-    page_title="Home",
-    page_icon="🧬",
-)
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-st.write("# Welcome to Streamlit! 👋")
+engine = create_engine(DATABASE_URL)
 
-st.sidebar.success("Welcome to Adam and Theo's DIS app")
+st.title("PostgreSQL + Streamlit")
 
-st.markdown(
-    """
-    Streamlit is an open-source app framework built specifically for
-    Machine Learning and Data Science projects.
-    **👈 Select a demo from the sidebar** to see some examples
-    of what Streamlit can do!
-    ### Want to learn more?
-    - Check out [streamlit.io](https://streamlit.io)
-    - Jump into our [documentation](https://docs.streamlit.io)
-    - Ask a question in our [community
-        forums](https://discuss.streamlit.io)
-    ### See more complex demos
-    - Use a neural net to [analyze the Udacity Self-driving Car Image
-        Dataset](https://github.com/streamlit/demo-self-driving)
-    - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-"""
-)
+query = "SELECT version();"
+
+with engine.connect() as connection:
+    result = connection.execute(text(query))
+    version = result.fetchone()[0]
+
+st.write("Connected to PostgreSQL!")
+st.code(version)
