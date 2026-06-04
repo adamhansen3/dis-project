@@ -37,6 +37,12 @@ Create a `.env` file in the main project folder and add your PostgreSQL connecti
 DATABASE_URL=postgresql+psycopg2://localhost
 ```
 
+If it doesnt load add your password like this:
+
+```env
+DATABASE_URL=postgresql+psycopg2://postgres:YOUR_PASSWORD@localhost
+```
+
 ## Run the app
 
 Start the Streamlit app with:
