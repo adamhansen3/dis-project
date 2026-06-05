@@ -1,6 +1,7 @@
 from utils.components import init_page, fetch_sql
 import streamlit as st
 import pandas as pd
+import re
 
 init_page("Analytics")
 
@@ -64,8 +65,6 @@ st.success(f"""
 ▶️ Total listens: {total_listens:,}
 """)
 
-import re
-
 st.divider()
 st.subheader("Regex Track Analysis")
 
@@ -82,6 +81,7 @@ if pattern:
             title[0]
             for title in all_tracks
             if re.search(pattern, title[0], re.IGNORECASE)
+        
         ]
 
         st.write(f"Found {len(matches)} matching tracks")
