@@ -61,6 +61,7 @@ st.bar_chart(df_artists.set_index("Artist"))
 
 st.divider()
 
+# NATIONALITY
 st.subheader("Listens by Nationality")
 
 nationality_listens = fetch_sql("""
@@ -77,12 +78,66 @@ df_nationality_listens = pd.DataFrame(
     columns=["Nationality", "Listens"]
 )
 
+df_nationality_listens["Listens"] = pd.to_numeric(
+    df_nationality_listens["Listens"]
+)
+
 chart = alt.Chart(df_nationality_listens).mark_bar().encode(
     x=alt.X("Listens:Q"),
     y=alt.Y("Nationality:N", sort="-x")
 )
 
 st.altair_chart(chart, width="stretch")
+
+st.divider()
+
+# USERS BY GENDER
+st.subheader("Users by Gender")
+
+gender_data = fetch_sql("""
+SELECT gender, COUNT(*) AS users
+FROM "user"
+GROUP BY gender
+ORDER BY users DESC
+""")
+
+df_gender = pd.DataFrame(
+    gender_data,
+    columns=["Gender", "Users"]
+)
+
+df_gender["Users"] = pd.to_numeric(
+    df_gender["Users"]
+)
+
+chart = alt.Chart(df_gender).mark_bar().encode(
+    x=alt.X("Users:Q"),
+    y=alt.Y("Gender:N", sort="-x")
+)
+
+st.altair_chart(chart, width="stretch")
+
+# USERS BY AGE
+st.subheader("Users by Age")
+
+age_data = fetch_sql("""
+SELECT
+    EXTRACT(YEAR FROM CURRENT_DATE) - birth_year AS age,
+    COUNT(*) AS users
+FROM "user"
+GROUP BY age
+ORDER BY age
+""")
+
+df_age = pd.DataFrame(
+    age_data,
+    columns=["Age", "Users"]
+)
+
+df_age["Age"] = pd.to_numeric(df_age["Age"])
+df_age["Users"] = pd.to_numeric(df_age["Users"])
+
+st.line_chart(df_age.set_index("Age"))
 
 st.divider()
 
@@ -120,6 +175,9 @@ df_year = pd.DataFrame(
     columns=["Release Year", "Listens"]
 )
 
+df_year["Release Year"] = pd.to_numeric(df_year["Release Year"])
+df_year["Listens"] = pd.to_numeric(df_year["Listens"])
+
 st.subheader("Listening Behaviour by Release Year")
 st.line_chart(df_year.set_index("Release Year"))
 
@@ -141,11 +199,46 @@ df_users = pd.DataFrame(
     columns=["User", "Listens"]
 )
 
+df_users["Listens"] = pd.to_numeric(
+    df_users["Listens"]
+)
+
 st.subheader("Most Active Users")
 
 chart = alt.Chart(df_users).mark_bar().encode(
     x=alt.X("Listens:Q"),
     y=alt.Y("User:N", sort="-x")
+)
+
+st.altair_chart(chart, width="stretch")
+
+st.divider()
+
+# Listening Behaviour by Gender
+st.subheader("Listening Behaviour by Gender")
+
+gender_listens = fetch_sql("""
+SELECT
+    u.gender,
+    COUNT(*) AS listens
+FROM listens l
+JOIN "user" u ON l.user_id = u.user_id
+GROUP BY u.gender
+ORDER BY listens DESC
+""")
+
+df_gender_listens = pd.DataFrame(
+    gender_listens,
+    columns=["Gender", "Listens"]
+)
+
+df_gender_listens["Listens"] = pd.to_numeric(
+    df_gender_listens["Listens"]
+)
+
+chart = alt.Chart(df_gender_listens).mark_bar().encode(
+    x=alt.X("Listens:Q"),
+    y=alt.Y("Gender:N", sort="-x")
 )
 
 st.altair_chart(chart, width="stretch")
